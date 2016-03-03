@@ -2,21 +2,24 @@
 
 from flask import Flask, request, redirect, session, render_template, url_for, flash
 from os import urandom
-from subprocess import check_output, Popen, PIPE, CalledProcessError, TimeoutExpired
-from io import BytesIO
+from subprocess import Popen, PIPE, CalledProcessError, TimeoutExpired
 import re
+from datetime import datetime
 
 app = Flask(__name__)
 
 ### Configuration ###
+logDir = "log"
+resultDirJSON = "result/json"
+resultDirHTML = "result/html"
 checkCmd = "testssl.sh/testssl.sh"
-checkArgs = ["--quiet"]
+checkArgs = ["--quiet", "--logfile=" + logDir, "--jsonfile=" + resultDirJSON]
 checkTimeout = 90
 rendererCmd = "aha"
 rendererArgs = ["-n"]
 rendererTimeout = 10
 protocols = ["ftp", "smtp", "pop3", "imap", "xmpp", "telnet", "ldap"]
-reHost = re.compile("^[a-z0-9]+(\.[a-z0-9]+)*$")
+reHost = re.compile("^[a-z0-9_][a-z0-9_\-]+(\.[a-z0-9_\-]+)*$")
 app.debug = False
 app.secret_key = urandom(32)
 #####################
@@ -86,6 +89,13 @@ def main():
             flash("HTML formatting failed - see raw output below")
             renderer.terminate()
 
+        ts = datetime.now()
+        try:
+            resultfile = open(resultDirHTML + "/" + ts.strftime("%Y%m%d-%H%M%S.%f") + "-" + host + "_" + str(port) + ".html", mode='w')
+            resultfile.write(str(html, 'utf-8'))
+            resultfile.close()
+        except:
+            pass
         return render_template("result.html", result=str(html, 'utf-8'))
 
 if __name__ == "__main__":
