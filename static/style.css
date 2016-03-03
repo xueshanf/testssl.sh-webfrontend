@@ -1,0 +1,12 @@
+.notice {
+    position: absolute;
+    bottom: 0px;
+    font-size: small;
+    text-align: center;
+    width: 100%;
+}
+
+.errormsg {
+    background-color: red;
+    padding: 10px;
+}
