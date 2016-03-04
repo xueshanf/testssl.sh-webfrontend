@@ -4,12 +4,24 @@
 {% for message in get_flashed_messages() %}
 <div class="errormsg">{{ message }}</div>
 {% endfor %}
+<script>
+function progress() {
+    document.getElementById("progress").textContent = "Please wait...";
+    setTimeout(progressContinue, 1000);
+}
+
+function progressContinue() {
+    document.getElementById("progress").textContent += ".";
+    setTimeout(progressContinue, 1000);
+}
+</script>
 <form method="POST">
     <table>
         <tr><td>Hostname/IP:</td><td><input type="text" name="host"></td></tr>
         <tr><td>Port:</td><td><input type="number" name="port" min="0" max="65535" value="443"></td></tr>
-        <tr><td>Use STARTTLS:</td><td><input type="checkbox" name="starttls" value="yes"></td></tr>
-        <tr><td>STARTTLS Protocol:</td><td>
+        <tr><td>Use STARTTLS:<br>(not required for web servers)</br></td><td>
+	    <input type="checkbox" name="starttls" value="yes">
+	    STARTTLS Protocol:</td><td>
             <select name="protocol">
                 <option value="ftp">ftp</option>
                 <option value="smtp">smtp</option>
@@ -19,7 +31,10 @@
                 <option value="telnet">telnet</option>
                 <option value="ldap">ldap</option>
             </select>
+	</td></tr>
+	<tr><td colspan="2"><input type="checkbox" name="confirm" value="yes"> I confirm that I am authorized to scan this system</td></tr>
     </table>
-    <input type="submit" value="Perform SSL Check">
+    <input type="submit" onclick="progress()" value="Perform SSL Check">
+    <div class="progress" id="progress"></div>
 </form>
 {% endblock %}

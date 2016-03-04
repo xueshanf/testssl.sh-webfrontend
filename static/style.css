@@ -1,5 +1,5 @@
 .notice {
-    position: absolute;
+    position: relative;
     bottom: 0px;
     font-size: small;
     text-align: center;
@@ -9,4 +9,8 @@
 .errormsg {
     background-color: red;
     padding: 10px;
+}
+
+.progress {
+    font-size: xx-large;
 }

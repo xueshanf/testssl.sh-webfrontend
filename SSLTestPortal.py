@@ -5,8 +5,9 @@ from os import urandom
 from subprocess import Popen, PIPE, CalledProcessError, TimeoutExpired
 import re
 from datetime import datetime
+import socket
 
-app = Flask(__name__)
+application = Flask(__name__)
 
 ### Configuration ###
 logDir = "log"
@@ -20,11 +21,13 @@ rendererArgs = ["-n"]
 rendererTimeout = 10
 protocols = ["ftp", "smtp", "pop3", "imap", "xmpp", "telnet", "ldap"]
 reHost = re.compile("^[a-z0-9_][a-z0-9_\-]+(\.[a-z0-9_\-]+)*$")
-app.debug = False
-app.secret_key = urandom(32)
+preflightRequest = True
+preflightTimeout = 10
+application.debug = False
+application.secret_key = urandom(32)
 #####################
 
-@app.route("/", methods=['GET', 'POST'])
+@application.route("/", methods=['GET', 'POST'])
 def main():
     if request.method == 'GET':                         # Main Page
         return render_template("main.html")
@@ -34,6 +37,9 @@ def main():
         host = request.form['host']
         if not reHost.match(host):
             flash("Wrong host name!")
+            ok = False
+        if host == "localhost" or host.find("127.") == 0:
+            flash("I was already pentested ;)")
             ok = False
 
         try:
@@ -54,6 +60,21 @@ def main():
         if starttls and protocol not in protocols:
             flash("Wrong protocol!")
             ok = False
+
+        if not ('confirm' in request.form and request.form['confirm'] == "yes"):
+            flash("You must confirm that you are authorized to scan the given system!")
+            ok = False
+
+        # Perform preflight request to prevent that testssl.sh runs into long timeout
+        if ok and preflightRequest:
+            try:
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.settimeout(preflightTimeout)
+                s.connect((host, port))
+                s.close()
+            except:
+                flash("Connection failed!")
+                ok = False
 
         if not ok:
             return redirect(url_for('main'))
@@ -99,4 +120,4 @@ def main():
         return render_template("result.html", result=str(html, 'utf-8'))
 
 if __name__ == "__main__":
-    app.run()
+    application.run()
