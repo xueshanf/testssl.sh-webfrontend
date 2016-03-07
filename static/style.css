@@ -11,6 +11,6 @@
     padding: 10px;
 }
 
-.progress {
-    font-size: xx-large;
+.progress-style {
+    text-align: left;
 }
