@@ -1,16 +1,35 @@
 {% extends "app.html" %}
 {% block content %}
-<h1>TLS/SSL Test Portal</h1>
 {% for message in get_flashed_messages() %}
 <div class="errormsg">{{ message }}</div>
 {% endfor %}
-<form method="POST">
-    <table>
-        <tr><td>Hostname/IP:</td><td><input type="text" name="host"></td></tr>
-        <tr><td>Port:</td><td><input type="number" name="port" min="0" max="65535" value="443"></td></tr>
-        <tr><td>Use STARTTLS:</td><td><input type="checkbox" name="starttls" value="yes"></td></tr>
-        <tr><td>STARTTLS Protocol:</td><td>
-            <select name="protocol">
+<div>
+<form method="POST" class="form-horizontal">
+    <div class="form-group">
+        <h1><span class="label label-default col-sm-8">TLS/SSL Test Portal</span></h1>
+    </div>
+    <div class="form-group">
+    <label class="col-sm-4 control-label">Hostname/IP</label>
+        <div class="col-sm-4">
+            <input type="text" name="host" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+    <label class="col-sm-4 control-label">Port</label>
+        <div class="col-sm-4">
+            <input type="number" name="port" min="0" max="65535" value="443" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+    <label class="col-sm-4 control-label">Use STARTTLS</label>
+        <div class="col-sm-4">
+            <input type="checkbox" class="checkbox" name="starttls" value="yes" class="form-control"> 
+        </div>
+    </div>
+    <div class="form-group">
+    <label class="col-sm-4 control-label">STARTTLS Protocol</label>
+        <div class="col-sm-4">
+            <select name="protocol" class="form-control">
                 <option value="ftp">ftp</option>
                 <option value="smtp">smtp</option>
                 <option value="pop3">pop3</option>
@@ -19,7 +38,13 @@
                 <option value="telnet">telnet</option>
                 <option value="ldap">ldap</option>
             </select>
-    </table>
-    <input type="submit" value="Perform SSL Check">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-4">
+            <input type="submit" class="btn btn-primary" value="Perform SSL Check">
+        </div>
+    </div>
 </form>
+</div>
 {% endblock %}
