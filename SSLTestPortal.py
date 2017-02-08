@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -27,10 +27,10 @@ resultDirJSON = "result/json"
 resultDirHTML = "result/html"
 checkCmd = "testssl.sh/testssl.sh"
 checkArgs = ["--quiet", "--logfile=" + logDir, "--jsonfile=" + resultDirJSON]
-checkTimeout = 90
+checkTimeout = 300
 rendererCmd = "aha"
 rendererArgs = ["-n"]
-rendererTimeout = 10
+rendererTimeout = 30
 protocols = ["ftp", "smtp", "pop3", "imap", "xmpp", "telnet", "ldap"]
 reHost = re.compile("^[a-z0-9_][a-z0-9_\-]+(\.[a-z0-9_\-]+)*$")
 preflightRequest = True

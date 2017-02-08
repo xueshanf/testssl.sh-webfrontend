@@ -12,3 +12,8 @@ This project is a web interface for [testssl.sh](https://testssl.sh/). It can be
 3. Install [aha](https://github.com/theZiz/aha) (`apt-get install aha`)
 4. Configure SSLTestPortal.py, especially application.secret\_key, in its configuration section and create the required paths (log, result/html and result/json in the default configuration).
 5. Run SSLTestPortal.py or deploy it as WSGI script.
+
+## Docker
+
+Markus Kraus ([@vMarkus_K](https://twitter.com/vMarkus_K)) created a [Docker
+Image](https://hub.docker.com/r/mycloudrevolution/testssl-webfrontend/).
