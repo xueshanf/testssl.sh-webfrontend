@@ -13,6 +13,23 @@ This project is a web interface for [testssl.sh](https://testssl.sh/). It can be
 4. Configure SSLTestPortal.py, especially application.secret\_key, in its configuration section and create the required paths (log, result/html and result/json in the default configuration).
 5. Run SSLTestPortal.py or deploy it as WSGI script.
 
+## NGINX Reverse Proxy
+
+If you would like to run behind a NGINX Reverse Proxy simply add this to your configuration file in sites-enabled
+
+     location /testssl/ {
+          proxy_pass http://127.0.0.1:5000/;
+          gzip_types text/plain application/javascript;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_connect_timeout 200;  # you might need to increase these values depending on your server hardware. 
+          proxy_send_timeout 200;     # you might need to increase these values depending on your server hardware. 
+          proxy_read_timeout 200;     # you might need to increase these values depending on your server hardware. 
+          send_timeout 200;
+     }
+You still have to autostart the script but this can be done in a screen or corntab.
+
 ## Docker
 
 Markus Kraus ([@vMarkus_K](https://twitter.com/vMarkus_K)) created a [Docker
