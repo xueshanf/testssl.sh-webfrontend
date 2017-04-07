@@ -29,7 +29,8 @@ If you want to add security to it look at nginx module [basic_auth](http://nginx
           proxy_read_timeout 200;     # you might need to increase these values depending on your server hardware. 
           send_timeout 200;           # you might need to increase these values depending on your server hardware. 
      }
-You still have to autostart the script but this can be done in a screen or corntab.
+
+You still have to autostart the script on boot. This can be done manually in a screen.
 
 ## Docker
 
