@@ -14,3 +14,6 @@
 .progress-style {
     text-align: left;
 }
+.progress {
+    max-width: 68%;
+}
