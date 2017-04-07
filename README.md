@@ -15,7 +15,8 @@ This project is a web interface for [testssl.sh](https://testssl.sh/). It can be
 
 ## NGINX Reverse Proxy
 
-If you would like to run behind a NGINX Reverse Proxy simply add this to your configuration file in sites-enabled
+If you would like to run behind a NGINX Reverse Proxy simply add this to your configuration file in sites-enabled. 
+If you want to add security to it look at nginx module [basic_auth] (http://nginx.org/en/docs/http/ngx_http_auth_basic_module.html)
 
      location /testssl/ {
           proxy_pass http://127.0.0.1:5000/;
@@ -26,7 +27,7 @@ If you would like to run behind a NGINX Reverse Proxy simply add this to your co
           proxy_connect_timeout 200;  # you might need to increase these values depending on your server hardware. 
           proxy_send_timeout 200;     # you might need to increase these values depending on your server hardware. 
           proxy_read_timeout 200;     # you might need to increase these values depending on your server hardware. 
-          send_timeout 200;
+          send_timeout 200;           # you might need to increase these values depending on your server hardware. 
      }
 You still have to autostart the script but this can be done in a screen or corntab.
 
