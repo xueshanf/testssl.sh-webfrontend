@@ -77,6 +77,14 @@ def main():
             flash("You must confirm that you are authorized to scan the given system!")
             ok = False
 
+        if not os.path.isdir(resultDirJSON):
+            flash("JSON log directory not present?")
+            ok = False
+
+        if not os.path.isdir(resultDirHTML):
+            flash("HTML log directory not present")
+            ok = False
+
         # Perform preflight request to prevent that testssl.sh runs into long timeout
         if ok and preflightRequest:
             try:
