@@ -13,6 +13,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from flask import Flask, request, redirect, session, render_template, url_for, flash
+import os
 from os import urandom
 from subprocess import Popen, PIPE, CalledProcessError, TimeoutExpired
 import re
